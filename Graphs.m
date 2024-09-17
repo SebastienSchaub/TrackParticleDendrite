@@ -166,14 +166,13 @@ function  [Graph,OutXLS]=Graphs(varargin)
             LTF=[];
             LLF=[];
             for i1=1:nd
-                LVB=cat(1,LVB,-Dendrite(i1).Motile.Back.V*Prop.ux/Prop.ut);
-                LTB=cat(1,LTB,Dendrite(i1).Motile.Back.T*Prop.ut);
-                LLB=cat(1,LLB,Dendrite(i1).Motile.Back.L*Prop.ux);
-                LVF=cat(1,LVF,Dendrite(i1).Motile.Forw.V*Prop.ux/Prop.ut);
-                LTF=cat(1,LTF,Dendrite(i1).Motile.Forw.T*Prop.ut);
-                LLF=cat(1,LLF,Dendrite(i1).Motile.Forw.L*Prop.ux);
+                LVB=cat(1,LVB,-Dendrite(i1).Motile.Back.V);
+                LTB=cat(1,LTB,Dendrite(i1).Motile.Back.T);
+                LLB=cat(1,LLB,Dendrite(i1).Motile.Back.L);
+                LVF=cat(1,LVF,Dendrite(i1).Motile.Forw.V);
+                LTF=cat(1,LTF,Dendrite(i1).Motile.Forw.T);
+                LLF=cat(1,LLF,Dendrite(i1).Motile.Forw.L);
             end
-            
             iTab=1+uint8(nd==1);
             
 % Speed histogram
@@ -198,29 +197,34 @@ function  [Graph,OutXLS]=Graphs(varargin)
                 h=bar(xV,hV.',1);
                 h(1).FaceColor= [0.1,0.1,1];
                 h(2).FaceColor= [1,0.1,0.1];
-                set(gca,'XTick',xV,'XTickLabelRotation',90)
+                set(gca,'XTick',xV,'XTickLabelRotation',90,'YScale','log')
                 title(['Speed in Motile phase:(',num2str(mV,'%2.2f,'),') [',Prop.XUnit,'/',Prop.TUnit,']'])
                 legend({'Forward','Backward'})
                 colormap(gca,jet(4))
-                ylabel('# vesicles')
+                ylabel('# measure')
+                grid on
+                
             set(gcf,'CurrentAxe',Graph.Tab{iTab}.hAxe(5))
                 h=bar(xL,hL.',1);
                 h(1).FaceColor= [0.1,0.1,1];
                 h(2).FaceColor= [1,0.1,0.1];
-                set(gca,'XTick',xL,'XTickLabelRotation',90)
+                set(gca,'XTick',xL,'XTickLabelRotation',90,'YScale','log')
                 title(['Length of Motile phase:(',num2str(mL,'%2.2f,'),') [',Prop.XUnit,']'])
                 legend({'Forward','Backward'})
                 colormap(gca,jet(4))
-                ylabel('# vesicles')
+                ylabel('# event')
+                grid on
+
             set(gcf,'CurrentAxe',Graph.Tab{iTab}.hAxe(6))
                 h=bar(xT,hT.',1);
                 h(1).FaceColor= [0.1,0.1,1];
                 h(2).FaceColor= [1,0.1,0.1];
-                set(gca,'XTick',xT,'XTickLabelRotation',90)
+                set(gca,'XTick',xT,'XTickLabelRotation',90,'YScale','log')
                 title(['Duration of Motile phase:(',num2str(mT,'%2.2f,'),') [',Prop.TUnit,']'])
                 legend({'Forward','Backward'})
-                ylabel('# vesicles')
+                ylabel('# event')
                 colormap(gca,jet(4))
+                grid on
                 
             if exist('OutXLS','var')
                 OutXLS=ExportXLS(OutXLS,'SpeedMotPh',[xV.',hV.'],mV,LVF,LVB,Prop);

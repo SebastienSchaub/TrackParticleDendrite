@@ -13,18 +13,8 @@ function TrackParticle(varargin)
 
         Prop.CurDir=strcat(cd,'\condition1_Control Impwt');
         Prop.LDirection=cat(2,[1,-1,-1],[1,-1,-1,1,1,1],[-1,-1],1,[-1,1,1,1],[1,1],-1);
-                
-        % Prop.CurDir=strcat(cd,'\condition2_Imp DQ');
-        % Prop.LDirection=cat(2,[-1,1,-1,1,1],[-1,1,1],[-1,-1,1],[1,-1,1,-1,-1,-1],[-1,1,1,1,1,1],[1,1,1,1]);
-        % 
-        % Prop.CurDir=strcat(cd,'\Trial2_Control_ImpBwt');
-        % Prop.LDirection=cat(2,[-1,1],[-1,1],[-1,1],-1,[-1,1,1,1,1],[1,1,1,-1],[1,1,-1],[-1,1],-1);
-        % 
-        % Prop.CurDir=strcat(cd,'\trial2_ImpBDQ');
-        % Prop.LDirection=cat(2,1,[-1,-1,1,-1],[1,-1],[-1,-1],[-1,-1],[-1,1,-1,1,-1,1,1]);      
 
-        Prop.LFile=GetXLSList(Prop.CurDir);
-        
+        Prop.LFile=GetXLSList(Prop.CurDir);        
         Prop.Ratio=0.0;% Ratio de déplacement pour fixer le mode
         Prop.ListMode={'Stable','Forward','Backward','Oscillator'};
         Prop.iDendrite=1;
@@ -66,8 +56,6 @@ function TrackParticle(varargin)
         warning off
         for i1=1:length(OutXLS)
             if ~isempty(OutXLS(i1).Data)
-                class(OutXLS(i1).Data)
-                disp(OutXLS(i1))
                 if isa(OutXLS(i1).Data,'cell')
                     writecell(OutXLS(i1).Data,XLSName,'Sheet',OutXLS(i1).Name);
                 elseif isa(OutXLS(i1).Data,'double')
@@ -498,7 +486,10 @@ function Motile=StatPerMobileSection(Track,Prop)
         for i2=1:length(F1)
             dt=(F2(i2)-F1(i2)+1)*Prop.ut;
             Motile.Forw.V=cat(1,Motile.Forw.V,iTrack.V(F1(i2):F2(i2)-1));
-            Motile.Forw.L=cat(1,Motile.Forw.L,cumsum(abs(diff(iTrack.S(F1(i2):F2(i2)-1)))));
+            % Motile.Forw.L=cat(1,Motile.Forw.L,cumsum(abs(diff(iTrack.S(F1(i2):F2(i2)-1)))));
+            % Motile.Forw.T=cat(1,Motile.Forw.T,dt);
+            % Motile.Forw.V=cat(1,Motile.Forw.V,median(iTrack.V(F1(i2):F2(i2)-1)));
+            Motile.Forw.L=cat(1,Motile.Forw.L,sum(abs(diff(iTrack.S(F1(i2):F2(i2)-1)))));
             Motile.Forw.T=cat(1,Motile.Forw.T,dt);
         end
         % figure(10)
@@ -517,14 +508,17 @@ function Motile=StatPerMobileSection(Track,Prop)
         % subplot 414
         % plot(iTrack.Filter)
         % xlim([1,length(iTrack.Filter)])
-        % pause(.1)
+        % pause
         
         F1=find(diff(k==1)==1);
         F2=find(diff(k==1)==-1);
         for i2=1:length(F1)
             dt=(F2(i2)-F1(i2)+1)*Prop.ut;
             Motile.Back.V=cat(1,Motile.Back.V,iTrack.V(F1(i2):F2(i2)-1));
-            Motile.Back.L=cat(1,Motile.Back.L,cumsum(abs(diff(iTrack.S(F1(i2):F2(i2)-1)))));
+            % Motile.Back.L=cat(1,Motile.Back.L,cumsum(abs(diff(iTrack.S(F1(i2):F2(i2)-1)))));
+            % Motile.Back.T=cat(1,Motile.Back.T,dt);
+            % Motile.Back.V=cat(1,Motile.Back.V,median(iTrack.V(F1(i2):F2(i2)-1)));
+            Motile.Back.L=cat(1,Motile.Back.L,sum(abs(diff(iTrack.S(F1(i2):F2(i2)-1)))));
             Motile.Back.T=cat(1,Motile.Back.T,dt);
         end
     end
