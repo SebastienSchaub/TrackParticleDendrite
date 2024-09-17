@@ -1,17 +1,17 @@
 # Goal and principle
 
-We developped in Matlab a Trackparticle, a program quantifying vesicle tracks along a dendrite to analyze them independently and extract a global behavior. 
-From a track datasheet, the program will measure the "dendrite backbone", a curvilinear axis oriented from the cell body to the tip.
-Then each track is projected in the backbone to measure the track properties.
-Then each track is segmented in subpart based on their movement : immobile, forward and backward. 
-The program provides visualisation of both the dendrite and the statistics for a dendrite set. 
-Currently export of the the curvilinear speed in forward/backward.
-The program is available here : https://github.com/SebastienSchaub/TrackParticleDendrite
+We developed a MATLAB-based program called TrackParticle, designed to quantify vesicle trajectories along dendrites for independent analysis and to derive global behavioral patterns. 
+The program processes data from a track datasheet by first measuring the "dendrite backbone," a curvilinear axis extending from the cell body to the dendritic tip. 
+Each vesicle track is then projected onto this backbone to assess track properties. 
+Subsequently, tracks are segmented into subcategories based on their movement: immobile, forward, and backward. 
+The program facilitates visualization of individual dendrites and provides statistical analyses for entire datasets. 
+Additionally, it supports the export of curvilinear speed data for forward and backward movements. 
+The program is accessible at: https://github.com/SebastienSchaub/TrackParticleDendrite.
 
 # How it works 
 To run, the program requires :
 
-- a datasheet with sequentially all vesicle tracks obtained from other tool,
+- a datasheet(s) with sequentially all vesicle tracks obtained from other tool. The program will concatenate all datasheet in a folder as a single condition
 - pixel size and timelapse unit,
 - the dendrite direction to properly assign forward and backward movement,
  
