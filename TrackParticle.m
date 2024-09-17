@@ -31,9 +31,9 @@ function TrackParticle(varargin)
         Prop.MotileMap=[.5,.5,.5;0,0,1;1,0,0;1,0,1];
 
 %For testing
-       Prop.LFile=Prop.LFile(2+(1:2));
-       Prop.LDirection=Prop.LDirection(1:2);
-        
+       % Prop.LFile=Prop.LFile(2+(1:2));
+       % Prop.LDirection=Prop.LDirection(1:2);
+        disp(Prop.LFile)
         for i1=1:length(Prop.LFile)
             Dendrite(i1)=CreateDendrite(Prop,fullfile(Prop.CurDir,Prop.LFile{i1}),Prop.LDirection(i1));%#ok
         end
